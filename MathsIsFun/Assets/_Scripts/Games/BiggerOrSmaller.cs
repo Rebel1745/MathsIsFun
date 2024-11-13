@@ -24,17 +24,21 @@ public class BiggerOrSmaller : MonoBehaviour
     private int _firstNumber;
     private int _secondNumber;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void InitialiseGame(int numberOfQuestions, int minNumber, int maxNumber)
     {
-        InitialiseGame();
-    }
+        _minNumber = minNumber;
+        _maxNumber = maxNumber;
 
-    private void InitialiseGame()
-    {
+        // TODO: implement game manager to control number of questions and progressing through them
+
         if (_minNumber == _maxNumber)
         {
             Debug.LogError("Minimum and maximum numbers cannot be the same");
+            return;
+        }
+        if (_minNumber > _maxNumber)
+        {
+            Debug.LogError("Minimum number cannot be bigger than the maximum number");
             return;
         }
 
@@ -73,7 +77,7 @@ public class BiggerOrSmaller : MonoBehaviour
 
     public void OnRestartButtonPress()
     {
-        InitialiseGame();
+        //InitialiseGame();
     }
 
     private void EnableDisableButtons(bool enable)
@@ -99,7 +103,7 @@ public class BiggerOrSmaller : MonoBehaviour
 
         yield return new WaitForSeconds(_resetDelay);
 
-        if (_autoRestart) InitialiseGame();
-        else _restartButton.gameObject.SetActive(true);
+        /*if (_autoRestart) InitialiseGame();
+        else _restartButton.gameObject.SetActive(true);*/
     }
 }
