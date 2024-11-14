@@ -11,25 +11,30 @@ public class BiggerOrSmaller : MonoBehaviour
     [SerializeField] private TMP_Text _resultText;
     [SerializeField] private Button _biggerButton;
     [SerializeField] private Button _smallerButton;
-    [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _nextQuestionButton;
     [SerializeField] private int _minNumber = 1;
     [SerializeField] private int _maxNumber = 10;
     [SerializeField] private float _resultDelay = 0.25f;
-    [SerializeField] private float _resetDelay = 0.25f;
+    [SerializeField] private float _nextQuestionDelay = 0.25f;
     [SerializeField] private string _defaultBiggerOrSmallerText = "is _______ than";
-    [SerializeField] private bool _autoRestart = false;
+    [SerializeField] private bool _autoNextQuestion = false;
     [SerializeField] private Color _correctColor = Color.green;
     [SerializeField] private Color _incorrectColor = Color.red;
+    [SerializeField] private GameObject _resultUI;
 
+    private int _numberOfQuestions;
+    private int _currentQuestionNumber;
     private int _firstNumber;
     private int _secondNumber;
+    private int _numberOfQuestionsCorrect;
 
     public void InitialiseGame(int numberOfQuestions, int minNumber, int maxNumber)
     {
+        _numberOfQuestions = numberOfQuestions;
+        _currentQuestionNumber = 0;
+        _numberOfQuestionsCorrect = 0;
         _minNumber = minNumber;
         _maxNumber = maxNumber;
-
-        // TODO: implement game manager to control number of questions and progressing through them
 
         if (_minNumber == _maxNumber)
         {
@@ -42,6 +47,12 @@ public class BiggerOrSmaller : MonoBehaviour
             return;
         }
 
+        NextQuestion();
+    }
+
+    private void NextQuestion()
+    {
+        _currentQuestionNumber++;
         _resultText.text = "";
         _firstNumber = Random.Range(_minNumber, _maxNumber);
         _secondNumber = Random.Range(_minNumber, _maxNumber);
@@ -58,7 +69,7 @@ public class BiggerOrSmaller : MonoBehaviour
 
         EnableDisableButtons(true);
 
-        _restartButton.gameObject.SetActive(false);
+        _nextQuestionButton.gameObject.SetActive(false);
     }
 
     public void OnBiggerButtonPress()
@@ -75,9 +86,9 @@ public class BiggerOrSmaller : MonoBehaviour
         StartCoroutine(CheckIfCorrect("s"));
     }
 
-    public void OnRestartButtonPress()
+    public void OnNextQuestionButtonPress()
     {
-        //InitialiseGame();
+        NextQuestion();
     }
 
     private void EnableDisableButtons(bool enable)
@@ -94,6 +105,7 @@ public class BiggerOrSmaller : MonoBehaviour
         {
             _resultText.color = _correctColor;
             _resultText.text = "!! CORRECT !!";
+            _numberOfQuestionsCorrect++;
         }
         else
         {
@@ -101,9 +113,15 @@ public class BiggerOrSmaller : MonoBehaviour
             _resultText.text = "!! WRONG !!";
         }
 
-        yield return new WaitForSeconds(_resetDelay);
+        yield return new WaitForSeconds(_nextQuestionDelay);
 
-        /*if (_autoRestart) InitialiseGame();
-        else _restartButton.gameObject.SetActive(true);*/
+        if (_currentQuestionNumber == _numberOfQuestions)
+        {
+            _resultUI.SetActive(true);
+            _resultUI.GetComponent<ResultsScreenUI>().ShowResults(_numberOfQuestions, _numberOfQuestionsCorrect);
+            gameObject.SetActive(false);
+        }
+        else if (_autoNextQuestion) NextQuestion();
+        else _nextQuestionButton.gameObject.SetActive(true);
     }
 }
