@@ -148,3 +148,34 @@
     color: rgb(255, 0, 14);
     background-color: rgb(220, 212, 212);
 }
+
+.Settings-int-field {
+    font-size: 50px;
+    -unity-font-style: bold;
+    padding-left: 50px;
+    width: 250px;
+}
+
+.Settings-label {
+    padding-left: 50px;
+    font-size: 50px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    width: 70%;
+}
+
+.Settings-toggle {
+    padding-left: 50px;
+    width: auto;
+    font-size: 26px;
+    height: 70px;
+    padding-bottom: 0;
+    -unity-font-style: bold;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-flex {
+}

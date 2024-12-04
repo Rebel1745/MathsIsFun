@@ -1,0 +1,28 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/Results.uss?fileID=7433441132597879392&amp;guid=db66f83fd70362a4584f67c7fb8e4db1&amp;type=3#Results" />
+    <engine:VisualElement name="ResultsScreenVE" style="flex-grow: 1; margin-top: 50px; margin-right: 50px; margin-bottom: 50px; margin-left: 50px;">
+        <engine:VisualElement name="ResultsHeader" style="flex-grow: 1;">
+            <engine:Label text="Results" class="Game-heading Results-header" />
+        </engine:VisualElement>
+        <engine:VisualElement name="NoOfQsLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Number of Questions:" class="Results-heading-label" />
+            <engine:Label text="10" name="NumberOfQuestionsText" class="Results-result-label" />
+        </engine:VisualElement>
+        <engine:VisualElement name="NoCorrectLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Correct:" class="Results-heading-label" />
+            <engine:Label text="7" name="NumberOfQuestionsCorrectText" class="Results-result-label" />
+        </engine:VisualElement>
+        <engine:VisualElement name="NoIncorrectLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Incorrect:" class="Results-heading-label" />
+            <engine:Label text="3" name="NumberOfQuestionsIncorrectText" class="Results-result-label" />
+        </engine:VisualElement>
+        <engine:VisualElement name="PercentLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Percent:" class="Results-heading-label" />
+            <engine:Label text="70%" name="PercentCorrectText" class="Results-result-label" />
+        </engine:VisualElement>
+        <engine:VisualElement name="RatingLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Rating:" class="Results-heading-label" />
+            <engine:Label text="Good" name="RatingText" class="Results-result-label" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

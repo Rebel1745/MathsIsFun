@@ -11,7 +11,7 @@ public class BiggerSmallerSettingsUI : MonoBehaviour
     public void StartBiggerSmallerGameButtonPressed()
     {
         _biggerSmallerGameUI.SetActive(true);
-        _biggerSmallerGameUI.GetComponentInChildren<BiggerOrSmaller>().InitialiseGame(int.Parse(_numberOfQuestionsInput.text), int.Parse(_minimumNumberInput.text), int.Parse(_maximumNumberInput.text));
+        //_biggerSmallerGameUI.GetComponentInChildren<BiggerOrSmaller>().InitialiseGame(int.Parse(_numberOfQuestionsInput.text), int.Parse(_minimumNumberInput.text), int.Parse(_maximumNumberInput.text));
         gameObject.SetActive(false);
     }
 }

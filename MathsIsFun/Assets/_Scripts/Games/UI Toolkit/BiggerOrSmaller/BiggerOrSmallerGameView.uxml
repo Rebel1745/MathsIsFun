@@ -1,0 +1,44 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/BiggerSmaller.uss?fileID=7433441132597879392&amp;guid=55f7b7b7b29034f42b0bd13f5e532994&amp;type=3#BiggerSmaller" />
+    <engine:VisualElement name="BiggerOrSmallerGame" style="flex-grow: 1; visibility: visible; display: none;">
+        <engine:Label text="Bigger or Smaller?" name="Heading" class="Game-heading" />
+        <engine:VisualElement name="TextHolder" style="flex-grow: 1; justify-content: space-between; margin-top: 50px;">
+            <engine:Label text="999" name="Number1" class="biggerSmallerText" />
+            <engine:Label text="is _______ than" name="IsBiggerOrSmaller" class="biggerSmallerText" />
+            <engine:Label text="999" name="Number2" class="biggerSmallerText" />
+        </engine:VisualElement>
+        <engine:VisualElement name="ButtonHolder" style="flex-grow: 1; flex-direction: column; align-items: center;">
+            <engine:Button text="&gt; BIGGER &gt;" name="BiggerButton" class="BiggerSmallerButton" />
+            <engine:Button text="&lt; SMALLER &lt;" name="SmallerButton" class="BiggerSmallerButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="BiggerOrSmallerSettings" style="flex-grow: 1; margin-top: 50px; margin-right: 50px; margin-bottom: 50px; margin-left: 50px;">
+        <engine:VisualElement name="QNoLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Number of Questions:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="Settings-label" />
+            <engine:IntegerField value="10" max-length="3" keyboard-type="NumberPad" name="NoOfQsIntField" class="Settings-int-field" />
+        </engine:VisualElement>
+        <engine:VisualElement name="MinNumberLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Smallest Number:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="Settings-label" />
+            <engine:IntegerField value="1" max-length="3" keyboard-type="NumberPad" name="MinNumberIntField" class="Settings-int-field" />
+        </engine:VisualElement>
+        <engine:VisualElement name="MaxNumberLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Largest Number:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="Settings-label" />
+            <engine:IntegerField value="10" max-length="3" keyboard-type="NumberPad" name="MaxNumberIntField" class="Settings-int-field" />
+        </engine:VisualElement>
+        <engine:VisualElement name="AutoNextQLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Auto Next Question:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" tooltip="Should the next question be moved to or should a button be pressed to proceed" class="Settings-label" />
+            <engine:Toggle tooltip="Should the next question be moved to or should a button be pressed to proceed" value="true" name="AutoNextQToggle" class="Settings-toggle" />
+        </engine:VisualElement>
+        <engine:VisualElement name="TimeQsLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Use Timer:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" tooltip="Use a timer for the questions" class="Settings-label" />
+            <engine:Toggle tooltip="Use a timer for the questions" value="false" name="UseTimerToggle" class="Settings-toggle" />
+        </engine:VisualElement>
+        <engine:VisualElement name="MaxTimeQLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Label text="Max Time Per Question:" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" enabled="false" name="MaxTimePerQLabel" class="Settings-label" />
+            <engine:IntegerField value="5" max-length="2" keyboard-type="NumberPad" name="MaxTimePerQIntField" enabled="false" class="Settings-int-field" />
+        </engine:VisualElement>
+        <engine:VisualElement name="StartGameLayout" style="flex-grow: 1; flex-direction: row; align-items: flex-start; align-self: auto; align-content: flex-start;">
+            <engine:Button text="Start Game" name="StartBiggerSmallerButton" class="BiggerSmallerButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
