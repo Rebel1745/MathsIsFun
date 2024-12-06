@@ -11,6 +11,9 @@ public class ResultsScreen : MonoBehaviour
     private Label _numberOfQuestionsIncorrectText;
     private Label _percentCorrectText;
     private Label _ratingText;
+    private Button _restartButton;
+    private Button _settingsButton;
+    private GameSettings _gs;
 
     private void Awake()
     {
@@ -28,14 +31,20 @@ public class ResultsScreen : MonoBehaviour
         _numberOfQuestionsIncorrectText = root.Q<Label>("NumberOfQuestionsIncorrectText");
         _percentCorrectText = root.Q<Label>("PercentCorrectText");
         _ratingText = root.Q<Label>("RatingText");
+        _restartButton = root.Q<Button>("ResultsRestartButton");
+        _settingsButton = root.Q<Button>("ResultsSettingsButton");
+
+        _restartButton.RegisterCallback<ClickEvent>(RestartButtonPressed);
+        _settingsButton.RegisterCallback<ClickEvent>(GameSettingsButtonPressed);
     }
 
-    public void ShowResults(int numberOfQuestions, int correct)
+    public void ShowResults(GameSettings gs, int correct)
     {
-        _numberOfQuestionsText.text = numberOfQuestions.ToString();
+        _gs = gs;
+        _numberOfQuestionsText.text = gs.NumberOfQuestions.ToString();
         _numberOfQuestionsCorrectText.text = correct.ToString();
-        _numberOfQuestionsIncorrectText.text = (numberOfQuestions - correct).ToString();
-        int percentCorrect = Mathf.RoundToInt(((float)correct / (float)numberOfQuestions) * 100);
+        _numberOfQuestionsIncorrectText.text = (gs.NumberOfQuestions - correct).ToString();
+        int percentCorrect = Mathf.RoundToInt(((float)correct / (float)gs.NumberOfQuestions) * 100);
         _percentCorrectText.text = percentCorrect + "%";
         _ratingText.text = PercentToRating(percentCorrect);
 
@@ -59,5 +68,17 @@ public class ResultsScreen : MonoBehaviour
         else rating = "";
 
         return rating;
+    }
+
+    public void RestartButtonPressed(ClickEvent evt)
+    {
+        _resultsScreen.style.display = DisplayStyle.None;
+        _gs.GameInterface.ShowGame(_gs);
+    }
+
+    public void GameSettingsButtonPressed(ClickEvent evt)
+    {
+        _resultsScreen.style.display = DisplayStyle.None;
+        _gs.GameSettingsInterface.ShowGameSettings(_gs);
     }
 }

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BiggerOrSmallerSettings : MonoBehaviour
+public class BiggerOrSmallerSettings : MonoBehaviour, IGameSettings
 {
     private VisualElement _biggerOrSmallerGame;
     private VisualElement _biggerOrSmallerSettings;
@@ -52,9 +52,30 @@ public class BiggerOrSmallerSettings : MonoBehaviour
 
     public void StartGameButtonPressed(ClickEvent evt)
     {
+        GameSettings gs = new()
+        {
+            GameName = "Bigger or Smaller",
+            GameVE = _biggerOrSmallerGame,
+            GameSettingsVE = _biggerOrSmallerSettings,
+            GameSettingsInterface = this,
+            NumberOfQuestions = _numberOfQuestionsField.value,
+            SmallestNumber = _smallestNumberField.value,
+            LargestNumber = _largestNumberField.value,
+            AutoNextQuestion = _autoNextQuestionToggle.value
+        };
+
         _biggerOrSmallerSettings.style.display = DisplayStyle.None;
         _biggerOrSmallerGame.style.display = DisplayStyle.Flex;
 
-        _gameScript.InitialiseGame(int.Parse(_numberOfQuestionsField.text), int.Parse(_smallestNumberField.text), int.Parse(_largestNumberField.text), true);
+        _gameScript.InitialiseGame(gs);
+    }
+
+    public void ShowGameSettings(GameSettings gs)
+    {
+        _biggerOrSmallerSettings.style.display = DisplayStyle.Flex;
+        _numberOfQuestionsField.value = gs.NumberOfQuestions;
+        _smallestNumberField.value = gs.SmallestNumber;
+        _largestNumberField.value = gs.LargestNumber;
+        _autoNextQuestionToggle.value = gs.AutoNextQuestion;
     }
 }

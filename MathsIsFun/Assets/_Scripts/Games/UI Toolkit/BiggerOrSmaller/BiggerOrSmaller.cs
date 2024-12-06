@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
 
-public class BiggerOrSmaller : MonoBehaviour
+public class BiggerOrSmaller : MonoBehaviour, IGame
 {
     private VisualElement _biggerOrSmallerGame;
     private Label _firstNumberText;
@@ -11,13 +11,14 @@ public class BiggerOrSmaller : MonoBehaviour
     private Label _resultText;
     private Button _biggerButton;
     private Button _smallerButton;
-    private int _minNumber;
-    private int _maxNumber;
+    private int _smallestNumber;
+    private int _largestNumber;
     private bool _autoNextQuestion;
     private float _resultDelay = 0.25f;
     private float _nextQuestionDelay = 0.25f;
     private string _defaultBiggerOrSmallerText = "is _______ than";
 
+    private GameSettings _gs;
     private int _numberOfQuestions;
     private int _currentQuestionNumber;
     private int _firstNumber;
@@ -48,21 +49,24 @@ public class BiggerOrSmaller : MonoBehaviour
         _smallerButton.RegisterCallback<ClickEvent>(OnSmallerButtonPress);
     }
 
-    public void InitialiseGame(int numberOfQuestions, int minNumber, int maxNumber, bool autoNextQuestion)
+    public void InitialiseGame(GameSettings gs)
     {
-        _numberOfQuestions = numberOfQuestions;
+        _biggerOrSmallerGame.style.display = DisplayStyle.Flex;
+        _gs = gs;
+        _gs.GameInterface = this;
+        _numberOfQuestions = gs.NumberOfQuestions;
         _currentQuestionNumber = 0;
         _numberOfQuestionsCorrect = 0;
-        _minNumber = minNumber;
-        _maxNumber = maxNumber + 1; // set this to +1 as it will now be included in the random range (which is max number exclusive)
-        _autoNextQuestion = autoNextQuestion;
+        _smallestNumber = gs.SmallestNumber;
+        _largestNumber = gs.LargestNumber + 1; // set this to +1 as it will now be included in the random range (which is max number exclusive)
+        _autoNextQuestion = gs.AutoNextQuestion;
 
-        if (_minNumber == _maxNumber)
+        if (_smallestNumber == _largestNumber)
         {
             Debug.LogError("Minimum and maximum numbers cannot be the same");
             return;
         }
-        if (_minNumber > _maxNumber)
+        if (_smallestNumber > _largestNumber)
         {
             Debug.LogError("Minimum number cannot be bigger than the maximum number");
             return;
@@ -77,8 +81,8 @@ public class BiggerOrSmaller : MonoBehaviour
         //_resultText.text = "";
         //_resultText.RemoveFromClassList("ResultTextCorrect");
         //_resultText.RemoveFromClassList("ResultTextIncorrect");
-        _firstNumber = Random.Range(_minNumber, _maxNumber);
-        _secondNumber = Random.Range(_minNumber, _maxNumber);
+        _firstNumber = Random.Range(_smallestNumber, _largestNumber);
+        _secondNumber = Random.Range(_smallestNumber, _largestNumber);
         _biggerOrSmallerText.text = _defaultBiggerOrSmallerText;
 
         int currentNumberChangeAttempt = 0;
@@ -86,13 +90,13 @@ public class BiggerOrSmaller : MonoBehaviour
         // ensure that the numbers are not the same
         while (_firstNumber == _secondNumber)
         {
-            _secondNumber = Random.Range(_firstNumber, _maxNumber);
+            _secondNumber = Random.Range(_firstNumber, _largestNumber);
 
             if (currentNumberChangeAttempt > 10)
             {
                 Debug.Log("Too many attempts made to set the numbers, defaulting to the largest/smallest");
-                _firstNumber = _minNumber;
-                _secondNumber = _maxNumber;
+                _firstNumber = _smallestNumber;
+                _secondNumber = _largestNumber;
             }
 
             currentNumberChangeAttempt++;
@@ -161,6 +165,11 @@ public class BiggerOrSmaller : MonoBehaviour
     void DisplayResult()
     {
         _biggerOrSmallerGame.style.display = DisplayStyle.None;
-        ResultsScreen.instance.ShowResults(_numberOfQuestions, _numberOfQuestionsCorrect);
+        ResultsScreen.instance.ShowResults(_gs, _numberOfQuestionsCorrect);
+    }
+
+    public void ShowGame(GameSettings gs)
+    {
+        InitialiseGame(gs);
     }
 }

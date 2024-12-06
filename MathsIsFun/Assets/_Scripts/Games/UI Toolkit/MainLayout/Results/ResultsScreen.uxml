@@ -24,5 +24,9 @@
             <engine:Label text="Rating:" class="Results-heading-label" />
             <engine:Label text="Good" name="RatingText" class="Results-result-label" />
         </engine:VisualElement>
+        <engine:VisualElement name="ResultButtonsLayout" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+            <engine:Button text="Restart Game" name="ResultsRestartButton" class="Results-buttons" />
+            <engine:Button text="Change Settings" name="ResultsSettingsButton" class="Results-buttons" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
