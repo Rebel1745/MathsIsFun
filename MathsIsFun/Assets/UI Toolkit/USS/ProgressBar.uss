@@ -1,0 +1,4 @@
+.questionNumberText {
+    font-size: 30px;
+    -unity-font-style: bold;
+}

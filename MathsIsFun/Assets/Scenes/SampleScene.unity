@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 55278758}
   - component: {fileID: 55278757}
   - component: {fileID: 55278759}
+  - component: {fileID: 55278760}
   m_Layer: 5
   m_Name: UIToolkitDocument
   m_TagString: Untagged
@@ -207,6 +208,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a6d9664cb6fa98408b7bf92f8d8e68c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &55278760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55278754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c37bdfdc1e01e842aa4984050a7a14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028

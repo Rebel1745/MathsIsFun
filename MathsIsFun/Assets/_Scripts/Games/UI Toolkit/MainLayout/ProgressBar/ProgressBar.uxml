@@ -1,0 +1,18 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/ProgressBar.uss?fileID=7433441132597879392&amp;guid=899d72dcf557e7d48ad32c7ea1665512&amp;type=3#ProgressBar" />
+    <engine:VisualElement name="ProgressInfoLayout" style="flex-grow: 1; flex-direction: row; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; visibility: visible;">
+        <engine:VisualElement name="QuestionNumberLayout" style="flex-grow: 1; flex-direction: row; padding-top: 30px; padding-right: 0; padding-bottom: 0; padding-left: 20px; width: 33%;">
+            <engine:Label text="Question:" class="questionNumberText" />
+            <engine:Label text="1/10" name="QuestionNumberText" class="questionNumberText" />
+        </engine:VisualElement>
+        <engine:VisualElement name="QuestionResultTextLayout" style="width: 34%; padding-top: 30px; margin-right: 0; padding-right: 40px; padding-left: 40px; visibility: visible;">
+            <engine:Label text="! CORRECT !" name="QuestionResultText" style="-unity-text-align: middle-center; -unity-text-outline-color: rgb(32, 28, 28); background-color: rgb(155, 198, 202); -unity-text-outline-width: 0; font-size: 25px; visibility: visible; display: none;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="NextQuestionButtonLayout" style="flex-grow: 1; width: 33%; padding-top: 30px; padding-right: 40px; padding-left: 40px; visibility: visible;">
+            <engine:Button text="Next Question" name="NextQuestionButton" style="visibility: visible; display: none; overflow: visible;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="ProgressBarLayout" style="flex-grow: 1;">
+        <engine:SliderInt value="0" high-value="10" name="ProgressBar" focusable="false" fill="true" enabled="true" show-input-field="false" style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;" />
+    </engine:VisualElement>
+</engine:UXML>

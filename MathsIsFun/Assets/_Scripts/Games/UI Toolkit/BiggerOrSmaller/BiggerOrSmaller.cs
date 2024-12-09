@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections;
 
 public class BiggerOrSmaller : MonoBehaviour, IGame
 {
@@ -61,6 +61,8 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _largestNumber = gs.LargestNumber + 1; // set this to +1 as it will now be included in the random range (which is max number exclusive)
         _autoNextQuestion = gs.AutoNextQuestion;
 
+        ProgressBar.instance.SetupProgressBar(_numberOfQuestions);
+
         if (_smallestNumber == _largestNumber)
         {
             Debug.LogError("Minimum and maximum numbers cannot be the same");
@@ -78,10 +80,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
     private void NextQuestion()
     {
         _currentQuestionNumber++;
-        //_resultText.text = "";
-        //_resultText.RemoveFromClassList("ResultTextCorrect");
-        //_resultText.RemoveFromClassList("ResultTextIncorrect");
-        _firstNumber = Random.Range(_smallestNumber, _largestNumber);
+        _firstNumber = UnityEngine.Random.Range(_smallestNumber, _largestNumber);
         _secondNumber = Random.Range(_smallestNumber, _largestNumber);
         _biggerOrSmallerText.text = _defaultBiggerOrSmallerText;
 
@@ -106,6 +105,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _secondNumberText.text = _secondNumber.ToString();
 
         EnableDisableButtons(true);
+        ProgressBar.instance.NextQuestion(_currentQuestionNumber);
     }
 
     public void OnBiggerButtonPress(ClickEvent evt)
@@ -139,23 +139,18 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
 
         if ((answer == "b" && _firstNumber > _secondNumber) || (answer == "s" && _firstNumber < _secondNumber))
         {
-            //_resultText.AddToClassList("ResultTextCorrect");
-            //_resultText.text = "!! CORRECT !!";
             _numberOfQuestionsCorrect++;
+            ProgressBar.instance.CorrectAnswer();
         }
         else
         {
-            //_resultText.AddToClassList("ResultTextIncorrect");
-            //_resultText.text = "!! WRONG !!";
+            ProgressBar.instance.IncorrectAnswer();
         }
 
         yield return new WaitForSeconds(_nextQuestionDelay);
 
         if (_currentQuestionNumber == _numberOfQuestions)
         {
-            /*_resultUI.SetActive(true);
-            _resultUI.GetComponent<ResultsScreenUI>().ShowResults(_numberOfQuestions, _numberOfQuestionsCorrect);
-            gameObject.SetActive(false);*/
             DisplayResult();
         }
         else if (_autoNextQuestion) NextQuestion();

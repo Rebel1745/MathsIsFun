@@ -17,8 +17,7 @@ public class ResultsScreen : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (instance == null) instance = this;
     }
 
     private void Start()

@@ -1,6 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <engine:Template name="BiggerOrSmallerGameView" src="project://database/Assets/_Scripts/Games/UI%20Toolkit/BiggerOrSmaller/BiggerOrSmallerGameView.uxml?fileID=9197481963319205126&amp;guid=dccffeba57a7cf441b6586f02d3d272b&amp;type=3#BiggerOrSmallerGameView" />
     <engine:Template name="ResultsScreen" src="project://database/Assets/_Scripts/Games/UI%20Toolkit/MainLayout/Results/ResultsScreen.uxml?fileID=9197481963319205126&amp;guid=4a5543aeb5ad4f547a5bad829eaa8663&amp;type=3#ResultsScreen" />
+    <engine:Template name="ProgressBar" src="project://database/Assets/_Scripts/Games/UI%20Toolkit/MainLayout/ProgressBar/ProgressBar.uxml?fileID=9197481963319205126&amp;guid=cf5fb4e932eaca94e9724b1b15363871&amp;type=3#ProgressBar" />
     <engine:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(93, 194, 198);">
         <engine:VisualElement name="Header" style="flex-grow: 1; height: 10%;" />
         <engine:VisualElement name="Content" style="flex-grow: 1; height: 75%;">
@@ -11,6 +12,8 @@
                 <engine:Instance template="ResultsScreen" name="ResultsScreen" style="display: none;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="GameProgress" style="flex-grow: 1; height: 15%;" />
+        <engine:VisualElement name="GameProgress" style="flex-grow: 1; height: 15%; display: flex; visibility: visible;">
+            <engine:Instance template="ProgressBar" name="ProgressBarContainer" style="visibility: visible; display: none;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
