@@ -11,12 +11,14 @@ public class BiggerOrSmallerSettings : MonoBehaviour, IGameSettings
     private IntegerField _numberOfQuestionsField;
     private IntegerField _smallestNumberField;
     private IntegerField _largestNumberField;
+    private IntegerField _maxTimeToAnswerField;
 
     private Toggle _autoNextQuestionToggle;
     private Toggle _useTimerToggle;
+    private Toggle _unlimitedTimeToggle;
 
-    private Label _maxTimePerQuestionLabel;
-    private IntegerField _maxTimePerQuestionField;
+    private VisualElement _unlimitedTimePerQuestion;
+    private VisualElement _maxTimePerQuestion;
 
     private Button _startGameButton;
 
@@ -36,18 +38,26 @@ public class BiggerOrSmallerSettings : MonoBehaviour, IGameSettings
         _largestNumberField = root.Q<IntegerField>("MaxNumberIntField");
         _autoNextQuestionToggle = root.Q<Toggle>("AutoNextQToggle");
         _useTimerToggle = root.Q<Toggle>("UseTimerToggle");
-        _maxTimePerQuestionLabel = root.Q<Label>("MaxTimePerQLabel");
-        _maxTimePerQuestionField = root.Q<IntegerField>("MaxTimePerQIntField");
+        _unlimitedTimePerQuestion = root.Q<VisualElement>("UnlimitedTimePerQLayout");
+        _unlimitedTimeToggle = root.Q<Toggle>("UnlimitedTimeToggle");
+        _maxTimePerQuestion = root.Q<VisualElement>("MaxTimePerQLayout");
         _startGameButton = root.Q<Button>("StartBiggerSmallerButton");
+        _maxTimeToAnswerField = root.Q<IntegerField>("MaxTimePerQIntField");
 
         _useTimerToggle.RegisterCallback<ChangeEvent<bool>>(UseTimerToogleChanged);
+        _unlimitedTimeToggle.RegisterCallback<ChangeEvent<bool>>(UnlimitedTimeToogleChanged);
         _startGameButton.RegisterCallback<ClickEvent>(StartGameButtonPressed);
     }
 
     private void UseTimerToogleChanged(ChangeEvent<bool> evt)
     {
-        _maxTimePerQuestionLabel.SetEnabled(evt.newValue);
-        _maxTimePerQuestionField.SetEnabled(evt.newValue);
+        _unlimitedTimePerQuestion.SetEnabled(evt.newValue);
+    }
+
+    private void UnlimitedTimeToogleChanged(ChangeEvent<bool> evt)
+    {
+        _maxTimePerQuestion.SetEnabled(!evt.newValue);
+        _maxTimeToAnswerField.isReadOnly = evt.newValue;
     }
 
     public void StartGameButtonPressed(ClickEvent evt)
@@ -61,7 +71,10 @@ public class BiggerOrSmallerSettings : MonoBehaviour, IGameSettings
             NumberOfQuestions = _numberOfQuestionsField.value,
             SmallestNumber = _smallestNumberField.value,
             LargestNumber = _largestNumberField.value,
-            AutoNextQuestion = _autoNextQuestionToggle.value
+            AutoNextQuestion = _autoNextQuestionToggle.value,
+            UseTimer = _useTimerToggle.value,
+            UnlimitedTime = _unlimitedTimeToggle.value,
+            MaxTimeToAnswer = _maxTimeToAnswerField.value
         };
 
         _biggerOrSmallerSettings.style.display = DisplayStyle.None;
@@ -77,5 +90,8 @@ public class BiggerOrSmallerSettings : MonoBehaviour, IGameSettings
         _smallestNumberField.value = gs.SmallestNumber;
         _largestNumberField.value = gs.LargestNumber;
         _autoNextQuestionToggle.value = gs.AutoNextQuestion;
+        _useTimerToggle.value = gs.UseTimer;
+        _unlimitedTimeToggle.value = gs.UnlimitedTime;
+        _maxTimeToAnswerField.value = gs.MaxTimeToAnswer;
     }
 }

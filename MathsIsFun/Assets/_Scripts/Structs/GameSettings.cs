@@ -13,5 +13,6 @@ public struct GameSettings
     public int LargestNumber;
     public bool AutoNextQuestion;
     public bool UseTimer;
-    public float MaxTimeToAnswer;
+    public bool UnlimitedTime;
+    public int MaxTimeToAnswer;
 }

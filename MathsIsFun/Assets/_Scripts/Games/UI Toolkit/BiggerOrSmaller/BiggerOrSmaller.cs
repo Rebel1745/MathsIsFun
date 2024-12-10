@@ -8,9 +8,9 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
     private Label _firstNumberText;
     private Label _secondNumberText;
     private Label _biggerOrSmallerText;
-    private Label _resultText;
     private Button _biggerButton;
     private Button _smallerButton;
+    private Button _nextQuestionButton;
     private int _smallestNumber;
     private int _largestNumber;
     private bool _autoNextQuestion;
@@ -40,13 +40,14 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _firstNumberText = root.Q<Label>("Number1");
         _secondNumberText = root.Q<Label>("Number2");
         _biggerOrSmallerText = root.Q<Label>("IsBiggerOrSmaller");
-        //_resultText = root.Q<Label>("Result");
 
         _biggerButton = root.Q<Button>("BiggerButton");
         _smallerButton = root.Q<Button>("SmallerButton");
+        _nextQuestionButton = root.Q<Button>("NextQuestionButton");
 
         _biggerButton.RegisterCallback<ClickEvent>(OnBiggerButtonPress);
         _smallerButton.RegisterCallback<ClickEvent>(OnSmallerButtonPress);
+        _nextQuestionButton.RegisterCallback<ClickEvent>(OnNextQuestionButtonPress);
     }
 
     public void InitialiseGame(GameSettings gs)
@@ -61,18 +62,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _largestNumber = gs.LargestNumber + 1; // set this to +1 as it will now be included in the random range (which is max number exclusive)
         _autoNextQuestion = gs.AutoNextQuestion;
 
-        ProgressBar.instance.SetupProgressBar(_numberOfQuestions);
-
-        if (_smallestNumber == _largestNumber)
-        {
-            Debug.LogError("Minimum and maximum numbers cannot be the same");
-            return;
-        }
-        if (_smallestNumber > _largestNumber)
-        {
-            Debug.LogError("Minimum number cannot be bigger than the maximum number");
-            return;
-        }
+        ProgressBar.instance.SetupProgressBar(_numberOfQuestions, _autoNextQuestion);
 
         NextQuestion();
     }
@@ -80,7 +70,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
     private void NextQuestion()
     {
         _currentQuestionNumber++;
-        _firstNumber = UnityEngine.Random.Range(_smallestNumber, _largestNumber);
+        _firstNumber = Random.Range(_smallestNumber, _largestNumber);
         _secondNumber = Random.Range(_smallestNumber, _largestNumber);
         _biggerOrSmallerText.text = _defaultBiggerOrSmallerText;
 
@@ -93,7 +83,6 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
 
             if (currentNumberChangeAttempt > 10)
             {
-                Debug.Log("Too many attempts made to set the numbers, defaulting to the largest/smallest");
                 _firstNumber = _smallestNumber;
                 _secondNumber = _largestNumber;
             }
@@ -122,7 +111,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         StartCoroutine(CheckIfCorrect("s"));
     }
 
-    public void OnNextQuestionButtonPress()
+    public void OnNextQuestionButtonPress(ClickEvent evt)
     {
         NextQuestion();
     }
@@ -151,10 +140,10 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
 
         if (_currentQuestionNumber == _numberOfQuestions)
         {
+            ProgressBar.instance.HideProgressBar();
             DisplayResult();
         }
         else if (_autoNextQuestion) NextQuestion();
-        //else _nextQuestionButton.gameObject.SetActive(true);
     }
 
     void DisplayResult()

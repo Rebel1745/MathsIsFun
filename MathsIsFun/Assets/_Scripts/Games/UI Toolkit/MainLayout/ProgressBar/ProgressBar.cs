@@ -13,6 +13,7 @@ public class ProgressBar : MonoBehaviour
     private Button _nextQuestionButton;
 
     private int _numberOfQuestions;
+    private bool _autoNextQuestion;
 
     private void Awake()
     {
@@ -30,10 +31,11 @@ public class ProgressBar : MonoBehaviour
         _nextQuestionButton = root.Q<Button>("NextQuestionButton");
     }
 
-    public void SetupProgressBar(int numberOfQuestions)
+    public void SetupProgressBar(int numberOfQuestions, bool autoNextQuestion)
     {
         _numberOfQuestions = numberOfQuestions;
         _progressSlider.highValue = _numberOfQuestions;
+        _autoNextQuestion = autoNextQuestion;
 
         ShowProgressBar();
     }
@@ -50,6 +52,7 @@ public class ProgressBar : MonoBehaviour
 
     public void NextQuestion(int currentQuestion)
     {
+        if (!_autoNextQuestion) _nextQuestionButton.style.display = DisplayStyle.None;
         _questionResultText.style.display = DisplayStyle.None;
         _questionNumberText.text = currentQuestion + "/" + _numberOfQuestions;
         _progressSlider.value = currentQuestion;
@@ -59,11 +62,13 @@ public class ProgressBar : MonoBehaviour
     {
         _questionResultText.style.display = DisplayStyle.Flex;
         _questionResultText.text = "! CORRECT !";
+        if (!_autoNextQuestion) _nextQuestionButton.style.display = DisplayStyle.Flex;
     }
 
     public void IncorrectAnswer()
     {
         _questionResultText.style.display = DisplayStyle.Flex;
         _questionResultText.text = "! INCORRECT !";
+        if (!_autoNextQuestion) _nextQuestionButton.style.display = DisplayStyle.Flex;
     }
 }
