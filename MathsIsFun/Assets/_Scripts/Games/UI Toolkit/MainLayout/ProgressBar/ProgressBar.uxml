@@ -7,9 +7,17 @@
         </engine:VisualElement>
         <engine:VisualElement name="QuestionResultTextLayout" style="width: 34%; padding-top: 30px; margin-right: 0; padding-right: 40px; padding-left: 40px; visibility: visible;">
             <engine:Label text="! CORRECT !" name="QuestionResultText" style="-unity-text-align: middle-center; -unity-text-outline-color: rgb(32, 28, 28); background-color: rgb(155, 198, 202); -unity-text-outline-width: 0; font-size: 25px; visibility: visible; display: none;" />
-        </engine:VisualElement>
-        <engine:VisualElement name="NextQuestionButtonLayout" style="flex-grow: 1; width: 33%; padding-top: 30px; padding-right: 40px; padding-left: 40px; visibility: visible;">
             <engine:Button text="Next Question" name="NextQuestionButton" style="visibility: visible; display: none; overflow: visible;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="TimersLayout" style="flex-grow: 1; width: 33%; padding-top: 30px; padding-right: 40px; padding-left: 40px; visibility: visible;">
+            <engine:VisualElement name="TimeToAnswerLayout" style="flex-grow: 1; flex-direction: row;">
+                <engine:Label text="Remaining:" style="-unity-font-style: bold; font-size: 20px;" />
+                <engine:Label text="69.6" name="TimeToAnswerText" style="font-size: 20px; -unity-font-style: bold;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+                <engine:Label text="Total Time:" style="-unity-font-style: bold; font-size: 20px;" />
+                <engine:Label text="3.3" name="TotalTimeText" style="-unity-font-style: bold; font-size: 20px;" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="ProgressBarLayout" style="flex-grow: 1;">

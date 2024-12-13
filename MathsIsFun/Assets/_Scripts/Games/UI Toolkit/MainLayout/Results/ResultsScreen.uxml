@@ -20,6 +20,10 @@
             <engine:Label text="Percent:" class="Results-heading-label" />
             <engine:Label text="70%" name="PercentCorrectText" class="Results-result-label" />
         </engine:VisualElement>
+        <engine:VisualElement name="TotalTimeLayout" class="Results-layout" style="flex-grow: 1;">
+            <engine:Label text="Time:" class="Results-heading-label" />
+            <engine:Label text="14.6" name="TotalTimeText" class="Results-result-label" />
+        </engine:VisualElement>
         <engine:VisualElement name="RatingLayout" class="Results-layout" style="flex-grow: 1;">
             <engine:Label text="Rating:" class="Results-heading-label" />
             <engine:Label text="Good" name="RatingText" class="Results-result-label" />

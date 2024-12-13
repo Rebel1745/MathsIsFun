@@ -30,6 +30,24 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         GetUIElements();
     }
 
+    private void OnEnable()
+    {
+        //ProgressBar.instance.OnMaxTimeAllowedToAnswerSurpassed += MaxTimeToAnswerSurpassed;
+    }
+
+    private void OnDisable()
+    {
+        ProgressBar.instance.OnMaxTimeAllowedToAnswerSurpassed -= MaxTimeToAnswerSurpassed;
+    }
+
+    void MaxTimeToAnswerSurpassed()
+    {
+        ProgressBar.instance.PauseTotalTimeTimer(true);
+        ProgressBar.instance.PauseTimeToAnswerTimer(true);
+        ProgressBar.instance.IncorrectAnswer(true);
+        StartCoroutine("GoToNextQuestion");
+    }
+
     void GetUIElements()
     {
         //Grab the topmost visual element in the UI Document
@@ -48,6 +66,8 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _biggerButton.RegisterCallback<ClickEvent>(OnBiggerButtonPress);
         _smallerButton.RegisterCallback<ClickEvent>(OnSmallerButtonPress);
         _nextQuestionButton.RegisterCallback<ClickEvent>(OnNextQuestionButtonPress);
+
+        ProgressBar.instance.OnMaxTimeAllowedToAnswerSurpassed += MaxTimeToAnswerSurpassed;
     }
 
     public void InitialiseGame(GameSettings gs)
@@ -62,7 +82,7 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         _largestNumber = gs.LargestNumber + 1; // set this to +1 as it will now be included in the random range (which is max number exclusive)
         _autoNextQuestion = gs.AutoNextQuestion;
 
-        ProgressBar.instance.SetupProgressBar(_numberOfQuestions, _autoNextQuestion);
+        ProgressBar.instance.SetupProgressBar(gs);
 
         NextQuestion();
     }
@@ -95,6 +115,8 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
 
         EnableDisableButtons(true);
         ProgressBar.instance.NextQuestion(_currentQuestionNumber);
+        ProgressBar.instance.PauseTotalTimeTimer(false);
+        ProgressBar.instance.RestartTimeToAnswerTimer();
     }
 
     public void OnBiggerButtonPress(ClickEvent evt)
@@ -124,6 +146,9 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
 
     IEnumerator CheckIfCorrect(string answer)
     {
+        // first pause the total time timer
+        ProgressBar.instance.PauseTotalTimeTimer(true);
+
         yield return new WaitForSeconds(_resultDelay);
 
         if ((answer == "b" && _firstNumber > _secondNumber) || (answer == "s" && _firstNumber < _secondNumber))
@@ -133,14 +158,20 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
         }
         else
         {
-            ProgressBar.instance.IncorrectAnswer();
+            ProgressBar.instance.IncorrectAnswer(false);
         }
 
+        StartCoroutine("GoToNextQuestion");
+    }
+
+    IEnumerator GoToNextQuestion()
+    {
         yield return new WaitForSeconds(_nextQuestionDelay);
 
         if (_currentQuestionNumber == _numberOfQuestions)
         {
             ProgressBar.instance.HideProgressBar();
+            ProgressBar.instance.OnMaxTimeAllowedToAnswerSurpassed -= MaxTimeToAnswerSurpassed;
             DisplayResult();
         }
         else if (_autoNextQuestion) NextQuestion();
@@ -149,7 +180,9 @@ public class BiggerOrSmaller : MonoBehaviour, IGame
     void DisplayResult()
     {
         _biggerOrSmallerGame.style.display = DisplayStyle.None;
-        ResultsScreen.instance.ShowResults(_gs, _numberOfQuestionsCorrect);
+        _gs.NumberOfQuestionCorrect = _numberOfQuestionsCorrect;
+        _gs.TotalTimeTaken = ProgressBar.instance.GetTotalTimeTaken();
+        ResultsScreen.instance.ShowResults(_gs);
     }
 
     public void ShowGame(GameSettings gs)

@@ -10,6 +10,8 @@ public class ResultsScreen : MonoBehaviour
     private Label _numberOfQuestionsCorrectText;
     private Label _numberOfQuestionsIncorrectText;
     private Label _percentCorrectText;
+    private VisualElement _totalTimeLayout;
+    private Label _totalTimeText;
     private Label _ratingText;
     private Button _restartButton;
     private Button _settingsButton;
@@ -29,6 +31,8 @@ public class ResultsScreen : MonoBehaviour
         _numberOfQuestionsCorrectText = root.Q<Label>("NumberOfQuestionsCorrectText");
         _numberOfQuestionsIncorrectText = root.Q<Label>("NumberOfQuestionsIncorrectText");
         _percentCorrectText = root.Q<Label>("PercentCorrectText");
+        _totalTimeLayout = root.Q<VisualElement>("TotalTimeLayout");
+        _totalTimeText = root.Q<Label>("TotalTimeText");
         _ratingText = root.Q<Label>("RatingText");
         _restartButton = root.Q<Button>("ResultsRestartButton");
         _settingsButton = root.Q<Button>("ResultsSettingsButton");
@@ -37,14 +41,23 @@ public class ResultsScreen : MonoBehaviour
         _settingsButton.RegisterCallback<ClickEvent>(GameSettingsButtonPressed);
     }
 
-    public void ShowResults(GameSettings gs, int correct)
+    public void ShowResults(GameSettings gs)
     {
         _gs = gs;
         _numberOfQuestionsText.text = gs.NumberOfQuestions.ToString();
-        _numberOfQuestionsCorrectText.text = correct.ToString();
-        _numberOfQuestionsIncorrectText.text = (gs.NumberOfQuestions - correct).ToString();
-        int percentCorrect = Mathf.RoundToInt(((float)correct / (float)gs.NumberOfQuestions) * 100);
+        _numberOfQuestionsCorrectText.text = _gs.NumberOfQuestionCorrect.ToString();
+        _numberOfQuestionsIncorrectText.text = (gs.NumberOfQuestions - _gs.NumberOfQuestionCorrect).ToString();
+        int percentCorrect = Mathf.RoundToInt(((float)_gs.NumberOfQuestionCorrect / (float)gs.NumberOfQuestions) * 100);
         _percentCorrectText.text = percentCorrect + "%";
+        if (_gs.UseTimer)
+        {
+            _totalTimeLayout.style.display = DisplayStyle.Flex;
+            _totalTimeText.text = _gs.TotalTimeTaken.ToString();
+        }
+        else
+        {
+            _totalTimeLayout.style.display = DisplayStyle.None;
+        }
         _ratingText.text = PercentToRating(percentCorrect);
 
         _resultsScreen.style.display = DisplayStyle.Flex;
